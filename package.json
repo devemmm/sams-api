@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd ./env nodemon ./bin/www",
+    "dev": "env-cmd ./.env nodemon ./bin/www",
     "start": "node ./bin/www"
   },
   "keywords": [
