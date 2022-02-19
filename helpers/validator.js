@@ -20,6 +20,24 @@ class Validator {
   });
 
   static listUsers = joi.object().keys();
+
+  static createSurvey = joi.object().keys({
+    name: joi.string().required(),
+    questions: joi.array().required(),
+  });
+
+  // ------------------SURVEY -----------------
+  static listSurveys = joi.object().keys();
+
+  static respondSurvey = joi.object().keys({
+    uid: joi.string().required(),
+    survey: joi.string().required(),
+    question: joi.string().required(),
+    answer: joi.string().required(),
+  });
+
+  static listSurveyResponses = joi.object().keys();
+  // ------------------ENDS -----------------
 }
 
 module.exports = Validator;

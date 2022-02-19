@@ -17,7 +17,7 @@ class Service extends Controller {
     } catch (error) {
       let responseType = responses.BAD_REQUEST;
       responseType.MSG = error.message;
-      return this.sendResponse({ req, res, type: responseType });
+      this.sendResponse({ req, res, type: responseType });
     }
   }
 

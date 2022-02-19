@@ -3,68 +3,73 @@ const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const userSchema = new mongoose.Schema({
-  fname: {
-    type: String,
-    required: true,
-    trim: null,
-  },
-  lname: {
-    type: String,
-    required: true,
-    trim: null,
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: null,
-    unique: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error("Email is invalid");
-      }
+const userSchema = new mongoose.Schema(
+  {
+    fname: {
+      type: String,
+      required: true,
+      trim: null,
     },
-  },
-  phone: {
-    type: String,
-    required: true,
-    trim: null,
-  },
-  dob: {
-    type: String,
-    trim: null,
-  },
-  avatar: {
-    type: String,
-    trim: true,
-    default:
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-dlglg&psig=AOvVaw011rkIS1zznvv7QL0h__wv&ust=1632694487110000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMCY25KTm_MCFQAAAAAdAAAAABAJ",
-  },
-  userType: {
-    type: String,
-    trim: true,
-    enum: ["user", "admin"],
-    default: "user",
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-    validate(value) {
-      if (value.toLowerCase().includes("password")) {
-        throw new Error('Password connot contain "password"');
-      }
+    lname: {
+      type: String,
+      required: true,
+      trim: null,
     },
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        trim: true,
+    email: {
+      type: String,
+      required: true,
+      trim: null,
+      unique: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Email is invalid");
+        }
       },
     },
-  ],
-});
+    phone: {
+      type: String,
+      required: true,
+      trim: null,
+    },
+    dob: {
+      type: String,
+      trim: null,
+    },
+    avatar: {
+      type: String,
+      trim: true,
+      default:
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-dlglg&psig=AOvVaw011rkIS1zznvv7QL0h__wv&ust=1632694487110000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMCY25KTm_MCFQAAAAAdAAAAABAJ",
+    },
+    userType: {
+      type: String,
+      trim: true,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      validate(value) {
+        if (value.toLowerCase().includes("password")) {
+          throw new Error('Password connot contain "password"');
+        }
+      },
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          trim: true,
+        },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.methods.toJSON = function () {
   const user = this;
