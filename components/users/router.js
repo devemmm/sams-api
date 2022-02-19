@@ -25,4 +25,13 @@ router
     controller.signin.bind(controller)
   );
 
+router
+  .route("/")
+  .get(
+    validator.validateRequest.bind(
+      new Validator().init(requestValidator.listUsers)
+    ),
+    controller.list.bind(controller)
+  );
+
 module.exports = router;

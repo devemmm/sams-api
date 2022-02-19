@@ -14,7 +14,23 @@ class Controller extends BaseController {
 
   async signin(req, res) {
     const data = await new Service().signin(req, res);
-    this.sendResponse({ req, res, type: responses.SUCCESS, data });
+
+    if (data) {
+      return this.sendResponse({ req, res, type: responses.SUCCESS, data });
+    }
+  }
+
+  async list(req, res) {
+    const users = await new Service().list(req, res);
+
+    if (users) {
+      return this.sendResponse({
+        req,
+        res,
+        type: responses.SUCCESS,
+        data: users,
+      });
+    }
   }
 }
 

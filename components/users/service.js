@@ -24,22 +24,30 @@ class Service extends Controller {
   async signin(req, res) {
     const { email, password } = req.body;
 
-    // try {
-    //   const user = await Schema.findByCredentials(email, password);
-    //   const token = await user.generateAuthToken();
+    try {
+      const user = await Schema.findByCredentials(email, password);
+      const token = await user.generateAuthToken();
 
-    //   // return { user, token };
-    // } catch (error) {
-    //   let responseType = responses.RESOURCE_NOT_FOUND;
-    //   responseType.MSG = error.message;
-    //   return this.sendResponse({
-    //     req,
-    //     res,
-    //     type: responses.RESOURCE_NOT_FOUND,
-    //   });
-    // }
+      return { user, token };
+    } catch (error) {
+      let responseType = responses.RESOURCE_NOT_FOUND;
+      responseType.MSG = error.message;
 
-    console.log("ok");
+      this.sendResponse({ req, res, type: responseType });
+    }
+  }
+
+  async list(req, res) {
+    try {
+      const users = Schema.find({});
+
+      return users;
+    } catch (error) {
+      let responseType = responses.INTERNAL_SERVER_ERROR;
+      responseType.MSG = error.message;
+
+      this.sendResponse({ req, res, type: responseType });
+    }
   }
 }
 

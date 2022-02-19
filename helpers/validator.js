@@ -18,6 +18,8 @@ class Validator {
     email: joi.string().required(),
     password: joi.string().required(),
   });
+
+  static listUsers = joi.object().keys();
 }
 
 module.exports = Validator;
