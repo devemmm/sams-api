@@ -74,7 +74,8 @@ userSchema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();
 
-  userObject.token = user.tokens[user.tokens.length - 1].token;
+  const tokensLength = user.tokens.length;
+  userObject.token = user.tokens[tokensLength - 1].token;
 
   delete userObject.password;
   delete userObject.tokens;
