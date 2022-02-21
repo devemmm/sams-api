@@ -42,6 +42,7 @@ class Validator {
   //--------------------Messages ------------------
   static userMessage = joi.object().keys({
     names: joi.string().required(),
+    avatar: joi.string(),
     subject: joi.string().required(),
     email: joi.string().required(),
     message: joi.string().required(),

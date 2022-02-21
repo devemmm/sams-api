@@ -38,8 +38,7 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
       trim: true,
-      default:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-dlglg&psig=AOvVaw011rkIS1zznvv7QL0h__wv&ust=1632694487110000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMCY25KTm_MCFQAAAAAdAAAAABAJ",
+      default: "assets/img/news-4.jpg",
     },
     userType: {
       type: String,
