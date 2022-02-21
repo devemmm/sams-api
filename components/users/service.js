@@ -1,4 +1,5 @@
 const Schema = require("./schema");
+const MessageSchema = require("./messagesSchema");
 const Controller = require("../base/controller");
 const { responses } = require("../../libs/constants");
 
@@ -42,6 +43,30 @@ class Service extends Controller {
       const users = Schema.find({});
 
       return users;
+    } catch (error) {
+      let responseType = responses.INTERNAL_SERVER_ERROR;
+      responseType.MSG = error.message;
+
+      this.sendResponse({ req, res, type: responseType });
+    }
+  }
+
+  async sendMessage(req, res) {
+    const message = new MessageSchema(req.body);
+
+    try {
+      return await message.save();
+    } catch (error) {
+      let responseType = responses.INTERNAL_SERVER_ERROR;
+      responseType.MSG = error.message;
+
+      this.sendResponse({ req, res, type: responseType });
+    }
+  }
+
+  async getMessage(req, res) {
+    try {
+      return await MessageSchema.find({});
     } catch (error) {
       let responseType = responses.INTERNAL_SERVER_ERROR;
       responseType.MSG = error.message;

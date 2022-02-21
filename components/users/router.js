@@ -34,4 +34,22 @@ router
     controller.list.bind(controller)
   );
 
+router
+  .route("/message")
+  .post(
+    validator.validateRequest.bind(
+      new Validator().init(requestValidator.userMessage)
+    ),
+    controller.sendMessage.bind(controller)
+  );
+
+router
+  .route("/messages")
+  .get(
+    validator.validateRequest.bind(
+      new Validator().init(requestValidator.getUserMessage)
+    ),
+    controller.getMessage.bind(controller)
+  );
+
 module.exports = router;

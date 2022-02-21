@@ -34,6 +34,32 @@ class Controller extends BaseController {
         })
       : null;
   }
+
+  async sendMessage(req, res) {
+    const result = await new Service().sendMessage(req, res);
+
+    return result
+      ? this.sendResponse({
+          req,
+          res,
+          type: responses.SUCCESS,
+          data: result,
+        })
+      : null;
+  }
+
+  async getMessage(req, res) {
+    const result = await new Service().getMessage(req, res);
+
+    return result
+      ? this.sendResponse({
+          req,
+          res,
+          type: responses.SUCCESS,
+          data: result,
+        })
+      : null;
+  }
 }
 
 module.exports = Controller;

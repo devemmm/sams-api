@@ -38,6 +38,16 @@ class Validator {
 
   static listSurveyResponses = joi.object().keys();
   // ------------------ENDS -----------------
+
+  //--------------------Messages ------------------
+  static userMessage = joi.object().keys({
+    names: joi.string().required(),
+    subject: joi.string().required(),
+    email: joi.string().required(),
+    message: joi.string().required(),
+  });
+
+  static getUserMessage = joi.object().keys();
 }
 
 module.exports = Validator;
