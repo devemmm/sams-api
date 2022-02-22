@@ -3,8 +3,18 @@ const mongoose = require("mongoose");
 const surveySchema = new mongoose.Schema(
   {
     uid: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    survey: { type: mongoose.Schema.Types.ObjectId, ref: "Survey" },
-    question: {
+    surveyId: { type: mongoose.Schema.Types.ObjectId, ref: "Survey" },
+    surveyName: {
+      type: String,
+      trim: true,
+      default: "default Survey Name",
+    },
+    questionId: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    questionName: {
       type: String,
       trim: true,
       required: true,

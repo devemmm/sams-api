@@ -25,4 +25,13 @@ router
     controller.list.bind(controller)
   );
 
+router
+  .route("/statistics")
+  .get(
+    validator.validateRequest.bind(
+      new Validator().init(requestValidator.listSurveyResponses)
+    ),
+    controller.statistics.bind(controller)
+  );
+
 module.exports = router;

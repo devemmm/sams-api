@@ -21,6 +21,19 @@ class Controller extends BaseController {
       ? this.sendResponse({ req, res, type: responses.SUCCESS, data: survey })
       : null;
   }
+
+  async statistics(req, res) {
+    const statistics = await new Service().analysis(req, res);
+
+    return statistics
+      ? this.sendResponse({
+          req,
+          res,
+          type: responses.SUCCESS,
+          data: statistics,
+        })
+      : null;
+  }
 }
 
 module.exports = Controller;

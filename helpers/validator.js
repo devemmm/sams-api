@@ -31,8 +31,10 @@ class Validator {
 
   static respondSurvey = joi.object().keys({
     uid: joi.string().required(),
-    survey: joi.string().required(),
-    question: joi.string().required(),
+    surveyId: joi.string().required(),
+    surveyName: joi.string(),
+    questionId: joi.string().required(),
+    questionName: joi.string().required(),
     answer: joi.string().required(),
   });
 
