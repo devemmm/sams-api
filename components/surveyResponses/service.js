@@ -54,26 +54,19 @@ class Service extends Controller {
 
       const analysis2 = [];
 
-      // item.surveyId === questionAnswer.surveyId &&
-      //       item.surveyName === questionAnswer.surveyName &&
-      //       item.questionId === questionAnswer.questionId &&
-      //       item.questionName === questionAnswer.questionName &&
-      //       item.option === questionAnswer.answer
-
       analysis1.forEach((questionAnswer) => {
-        const filteredQuestionAnswer = surveyResponsedata.filter((item) => {
-          return (
+        const filteredQuestionAnswer = surveyResponsedata.filter(
+          (item) =>
+            item.surveyId.toString() === questionAnswer.surveyId.toString() &&
             item.surveyName === questionAnswer.surveyName &&
+            item.questionId.toString() ===
+              questionAnswer.questionId.toString() &&
             item.questionName === questionAnswer.questionName &&
-            item.option === questionAnswer.answer
-          );
-        });
-
-        console.log(filteredQuestionAnswer.length);
+            item.answer === questionAnswer.option
+        );
 
         let fin = questionAnswer;
         fin.value = filteredQuestionAnswer.length;
-
         analysis2.push(fin);
       });
       return analysis2;
