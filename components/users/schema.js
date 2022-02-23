@@ -8,17 +8,37 @@ const userSchema = new mongoose.Schema(
     fname: {
       type: String,
       required: true,
-      trim: null,
+      trim: true,
     },
     lname: {
       type: String,
       required: true,
-      trim: null,
+      trim: true,
+    },
+    about: {
+      type: String,
+      trim: true,
+      default: "please update about",
+    },
+    company: {
+      type: String,
+      trim: true,
+      default: "Sanitation accessability Monitoring System (SAMS)",
+    },
+    country: {
+      type: String,
+      trim: true,
+      default: "RWANDA",
+    },
+    address: {
+      type: String,
+      trim: true,
+      default: "KG 181 Street, KIGALI, Rwanda",
     },
     email: {
       type: String,
       required: true,
-      trim: null,
+      trim: true,
       unique: true,
       validate(value) {
         if (!validator.isEmail(value)) {
@@ -29,11 +49,11 @@ const userSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: true,
-      trim: null,
+      trim: true,
     },
     dob: {
       type: String,
-      trim: null,
+      trim: true,
     },
     avatar: {
       type: String,
