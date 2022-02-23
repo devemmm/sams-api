@@ -39,6 +39,9 @@ class Validator {
   });
 
   static listSurveyResponses = joi.object().keys();
+  static getSuveyStatisticsById = joi.object().keys({
+    id: joi.string().required(),
+  });
   // ------------------ENDS -----------------
 
   //--------------------Messages ------------------

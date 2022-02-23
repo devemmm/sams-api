@@ -34,6 +34,19 @@ class Controller extends BaseController {
         })
       : null;
   }
+
+  async singleSurveyStatistics(req, res) {
+    const statistics = await new Service().analysis(req, res);
+
+    return statistics
+      ? this.sendResponse({
+          req,
+          res,
+          type: responses.SUCCESS,
+          data: statistics,
+        })
+      : null;
+  }
 }
 
 module.exports = Controller;

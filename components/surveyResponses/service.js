@@ -34,13 +34,24 @@ class Service extends Controller {
 
   async analysis(req, res) {
     try {
-      const surveyData = await SurveySchema.find({});
+      let surveyData;
+
+      if (req.params.id) {
+        surveyData = await SurveySchema.find({ _id: req.params.id });
+      } else {
+        surveyData = await SurveySchema.find({});
+      }
       const surveyResponsedata = await Schema.find({});
 
-      const fakeSurveyData = [surveyData[0]];
+      let singleAna = [];
       const analysis1 = [];
-      fakeSurveyData.forEach(async (survey) => {
+      surveyData.forEach(async (survey) => {
         survey.questions.forEach((question) => {
+          singleAna.push({
+            surveyId: survey._id,
+            questionId: question._id,
+            questionName: question.question,
+          });
           question.options.forEach((option) => {
             analysis1.push({
               surveyId: survey._id,
@@ -80,7 +91,28 @@ class Service extends Controller {
         fin.total = countPeople.length;
         analysis2.push(fin);
       });
-      return analysis2;
+
+      let finalStatisticsSingleSurvey = [];
+
+      if (req.params.id) {
+        singleAna.forEach((question) => {
+          finalStatisticsSingleSurvey.push({
+            question: question.questionName,
+            data: analysis2.filter(
+              (response) =>
+                response.surveyId === question.surveyId &&
+                response.questionId === question.questionId &&
+                response.questionName === question.questionName
+            ),
+          });
+        });
+      }
+
+      if (req.params.id) {
+        return finalStatisticsSingleSurvey;
+      } else {
+        return analysis2;
+      }
     } catch (error) {
       let responseType = responses.INTERNAL_SERVER_ERROR;
       responseType.MSG = error.message;

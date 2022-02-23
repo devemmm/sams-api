@@ -34,4 +34,13 @@ router
     controller.statistics.bind(controller)
   );
 
+router
+  .route("/statistics/:id")
+  .get(
+    validator.validateRequest.bind(
+      new Validator().init(requestValidator.getSuveyStatisticsById)
+    ),
+    controller.singleSurveyStatistics.bind(controller)
+  );
+
 module.exports = router;
