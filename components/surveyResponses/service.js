@@ -65,8 +65,18 @@ class Service extends Controller {
             item.answer === questionAnswer.option
         );
 
+        const countPeople = surveyResponsedata.filter(
+          (item) =>
+            item.surveyId.toString() === questionAnswer.surveyId.toString() &&
+            item.surveyName === questionAnswer.surveyName &&
+            item.questionId.toString() ===
+              questionAnswer.questionId.toString() &&
+            item.questionName === questionAnswer.questionName
+        );
+
         let fin = questionAnswer;
         fin.value = filteredQuestionAnswer.length;
+        fin.people = countPeople.length;
         analysis2.push(fin);
       });
       return analysis2;
