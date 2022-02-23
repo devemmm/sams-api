@@ -37,8 +37,9 @@ class Service extends Controller {
       const surveyData = await SurveySchema.find({});
       const surveyResponsedata = await Schema.find({});
 
+      const fakeSurveyData = [surveyData[0]];
       const analysis1 = [];
-      surveyData.forEach(async (survey) => {
+      fakeSurveyData.forEach(async (survey) => {
         survey.questions.forEach((question) => {
           question.options.forEach((option) => {
             analysis1.push({
