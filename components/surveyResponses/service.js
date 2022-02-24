@@ -89,6 +89,7 @@ class Service extends Controller {
         let fin = questionAnswer;
         fin.value = filteredQuestionAnswer.length;
         fin.total = countPeople.length;
+        fin.name = fin.option;
         analysis2.push(fin);
       });
 
