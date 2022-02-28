@@ -33,9 +33,10 @@ class Validator {
     uid: joi.string().required(),
     surveyId: joi.string().required(),
     surveyName: joi.string(),
-    questionId: joi.string().required(),
-    questionName: joi.string().required(),
-    answer: joi.string().required(),
+    answers: joi.array().required(),
+    // questionId: joi.string().required(),
+    // questionName: joi.string().required(),
+    // answer: joi.string().required(),
   });
 
   static listSurveyResponses = joi.object().keys();

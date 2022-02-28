@@ -11,8 +11,21 @@ class Service extends Controller {
 
   async respond(req, res) {
     try {
-      const responses = new Schema(req.body);
-      return await responses.save();
+      if (req.body.answers.length > 0) {
+        req.body.answers.forEach(async (item) => {
+          const response = new Schema({
+            ...item,
+            uid: req.body.uid,
+            surveyId: req.body.surveyId,
+            surveyName: req.body.surveyName,
+          });
+          await response.save();
+        });
+      } else {
+        return { error: "database error" };
+      }
+
+      return { congratulation: "thank you for your information" };
     } catch (error) {
       let responseType = responses.INTERNAL_SERVER_ERROR;
       responseType.MSG = error.message;
