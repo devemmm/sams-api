@@ -2,6 +2,9 @@ const Controller = require("../base/controller");
 const SurveySchema = require("../survey/schema");
 const Schema = require("./schema");
 const { responses } = require("../../libs/constants");
+const fs = require("fs");
+var json2xls = require("json2xls");
+const filename = "sample.xlsx";
 
 class Service extends Controller {
   constructor() {
@@ -34,9 +37,24 @@ class Service extends Controller {
     }
   }
 
+  static convert = function (responses) {
+    var xls = json2xls(responses);
+    fs.writeFileSync(filename, xls, "binary", (err) => {
+      if (err) {
+        console.log("writeFileSync :", err);
+      }
+      console.log(filename + " file is saved!");
+    });
+  };
+
+  
+
   async list(req, res) {
     try {
-      return Schema.find({});
+      const responses = await Schema.find({});
+      Service.convert(responses);
+
+      return responses;
     } catch (error) {
       let responseType = responses.INTERNAL_SERVER_ERROR;
       responseType.MSG = error.message;
