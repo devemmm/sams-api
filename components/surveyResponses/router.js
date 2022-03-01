@@ -25,6 +25,15 @@ router
     controller.list.bind(controller)
   );
 
+  router
+  .route("/report")
+  .post(
+    validator.validateRequest.bind(
+      new Validator().init(requestValidator.listSurveyResponses)
+    ),
+    controller.list.bind(controller)
+  );
+
 router
   .route("/statistics")
   .get(

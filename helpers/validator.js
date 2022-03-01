@@ -40,7 +40,7 @@ class Validator {
   });
 
   static listSurveyResponses = joi.object().keys({
-    generateReport: joi.string(),
+    generateReport: joi.boolean(),
     email: joi.string()
   });
   static getSuveyStatisticsById = joi.object().keys({
