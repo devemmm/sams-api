@@ -39,7 +39,10 @@ class Validator {
     // answer: joi.string().required(),
   });
 
-  static listSurveyResponses = joi.object().keys();
+  static listSurveyResponses = joi.object().keys({
+    generateReport: joi.string(),
+    email: joi.string()
+  });
   static getSuveyStatisticsById = joi.object().keys({
     id: joi.string().required(),
   });

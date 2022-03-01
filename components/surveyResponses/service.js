@@ -1,10 +1,12 @@
+const fs = require("fs");
+const nodemailer = require('nodemailer')
+var json2xls = require("json2xls");
 const Controller = require("../base/controller");
 const SurveySchema = require("../survey/schema");
 const Schema = require("./schema");
 const { responses } = require("../../libs/constants");
-const fs = require("fs");
-var json2xls = require("json2xls");
-const filename = "sample.xlsx";
+const Utils = require('../../helpers/utils')
+const filename = "SAMS-report.xlsx";
 
 class Service extends Controller {
   constructor() {
@@ -51,10 +53,76 @@ class Service extends Controller {
 
   async list(req, res) {
     try {
-      const responses = await Schema.find({});
-      Service.convert(responses);
 
-      return responses;
+      
+      
+      const responses = await Schema.find({});
+
+      if(req.body.generateReport && req.body.email !== null){
+
+        // fs.stat('./sample.xlsx', function(err, stats){
+        //   if(stats){
+        //     fs.unlink('./sample.xlsx', function(error){
+        //       if(error) return console.log(error);
+        //       console.log('existing data deleted successfully');
+        //     })
+        //   }
+        // })
+  
+        Service.convert(responses);
+
+        
+        const output = `
+            <p>Sanitaion Accessability Monitoring System Report</p>
+            <h3>Contact Details</h3>
+            <ul>
+                <li>Name: Sanitaion Accessability Monitoring System (SAMS)</li>
+                <li>Email: info@sams.rw</li>
+                <li>Phone: +250 788 596 281</li>
+            </ul>
+            <h3>Message</h3>
+            <p>This is the report of survey resposes generated at ${new Utils().rightNow()}</p>
+        `;
+    
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD
+            }
+        })
+    
+        // Step 2
+        let mailOptions = {
+            from: 'primaryemmy@gmail.com',
+            to: `${req.body.email}`,
+            subject: "Sanitaion Accessability Monitoring System Report",
+            text: "heading",
+            html: output,
+            attachments:[
+              {   
+                filename: 'SAMS-report.xlsx',
+                path: './SAMS-report.xlsx'
+            }
+            ]
+        }
+
+         // Step 3
+         transporter.sendMail(mailOptions, function(err, data) {
+          if (err) {
+              return res.send({error: err})
+          } else {
+              console.log('Email sent !!!!!')
+              res.redirect('/contact-us');
+          }
+        })
+
+        return {
+          info: "Report Generated Please check you Email"
+        }
+      }else{  
+        return responses;
+      }
     } catch (error) {
       let responseType = responses.INTERNAL_SERVER_ERROR;
       responseType.MSG = error.message;
