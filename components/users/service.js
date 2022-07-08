@@ -2,6 +2,7 @@ const Schema = require("./schema");
 const MessageSchema = require("./messagesSchema");
 const Controller = require("../base/controller");
 const { responses } = require("../../libs/constants");
+const bcrypt = require('bcrypt')
 
 class Service extends Controller {
   constructor() {
@@ -64,9 +65,51 @@ class Service extends Controller {
     }
   }
 
+
   async getMessage(req, res) {
     try {
       return await MessageSchema.find({});
+    } catch (error) {
+      let responseType = responses.INTERNAL_SERVER_ERROR;
+      responseType.MSG = error.message;
+
+      this.sendResponse({ req, res, type: responseType });
+    }
+  }
+
+  async updateAccount(req, res) {
+    try {
+
+      var user = await Schema.findOne({ email: req.user?.email })
+
+      const updates = Object.keys(req.body)
+      const allowedUpdates = ['country', 'address', 'phone']
+
+      const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+      if (!isValidOperation) {
+        throw new Error("you are updating the an allowed field")
+      }
+
+      updates.forEach((update) => user[update] = req.body[update])
+      await user.save()
+
+      return { message: "account updated successfull" }
+    } catch (error) {
+      let responseType = responses.INTERNAL_SERVER_ERROR;
+      responseType.MSG = error.message;
+
+      this.sendResponse({ req, res, type: responseType });
+    }
+  }
+
+  async changePassword(req, res) {
+    try {
+      const { password, newPassword } = req.body
+      const user = await Schema.findByCredentials(req.user?.email, password)
+      user.password = newPassword
+      await user.save()
+
+      return { message: "password changed successfull" }
     } catch (error) {
       let responseType = responses.INTERNAL_SERVER_ERROR;
       responseType.MSG = error.message;

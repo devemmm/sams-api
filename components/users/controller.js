@@ -27,11 +27,11 @@ class Controller extends BaseController {
 
     return users
       ? this.sendResponse({
-          req,
-          res,
-          type: responses.SUCCESS,
-          data: users,
-        })
+        req,
+        res,
+        type: responses.SUCCESS,
+        data: users,
+      })
       : null;
   }
 
@@ -40,11 +40,11 @@ class Controller extends BaseController {
 
     return result
       ? this.sendResponse({
-          req,
-          res,
-          type: responses.SUCCESS,
-          data: result,
-        })
+        req,
+        res,
+        type: responses.SUCCESS,
+        data: result,
+      })
       : null;
   }
 
@@ -53,11 +53,38 @@ class Controller extends BaseController {
 
     return result
       ? this.sendResponse({
-          req,
-          res,
-          type: responses.SUCCESS,
-          data: result,
-        })
+        req,
+        res,
+        type: responses.SUCCESS,
+        data: result,
+      })
+      : null;
+  }
+
+  async updateAccount(req, res) {
+    const result = await new Service().updateAccount(req, res);
+
+    return result
+      ? this.sendResponse({
+        req,
+        res,
+        type: responses.SUCCESS,
+        data: result,
+      })
+      : null;
+  }
+
+
+  async changePassword(req, res) {
+    const result = await new Service().changePassword(req, res);
+
+    return result
+      ? this.sendResponse({
+        req,
+        res,
+        type: responses.SUCCESS,
+        data: result,
+      })
       : null;
   }
 }

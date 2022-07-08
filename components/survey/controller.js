@@ -22,6 +22,14 @@ class Controller extends BaseController {
       ? this.sendResponse({ req, res, type: responses.SUCCESS, data: surveys })
       : null;
   }
+
+  async delete(req, res) {
+    const surveys = await new Service().delete(req, res);
+
+    return surveys
+      ? this.sendResponse({ req, res, type: responses.SUCCESS, data: surveys })
+      : null;
+  }
 }
 
 module.exports = Controller;

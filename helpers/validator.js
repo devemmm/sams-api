@@ -58,6 +58,17 @@ class Validator {
   });
 
   static getUserMessage = joi.object().keys();
+
+  static changePassword = joi.object().keys({
+    password: joi.string().required(),
+    newPassword: joi.string().required()
+  })
+
+  static updateAccount = joi.object().keys({
+    country: joi.string().required(),
+    address: joi.string().required(),
+    phone: joi.string().required(),
+  })
 }
 
 module.exports = Validator;

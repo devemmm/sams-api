@@ -33,4 +33,13 @@ router
     controller.list.bind(controller)
   );
 
+router
+  .route("/:id")
+  .delete(
+    validator.validateRequest.bind(
+      new Validator().init(requestValidator.listSurveys)
+    ),
+    controller.delete.bind(controller)
+  );
+
 module.exports = router;
