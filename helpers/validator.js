@@ -68,6 +68,7 @@ class Validator {
     country: joi.string().required(),
     address: joi.string().required(),
     phone: joi.string().required(),
+    about: joi.string().required()
   })
 }
 

@@ -56,7 +56,7 @@ router
 
 router
   .route("/")
-  .patch(
+  .post(
     authorization.requireAuth.bind(authorization),
     validator.validateRequest.bind(
       new Validator().init(requestValidator.updateAccount)
@@ -66,7 +66,7 @@ router
 
 router
   .route("/password")
-  .patch(
+  .post(
     authorization.requireAuth.bind(authorization),
     validator.validateRequest.bind(
       new Validator().init(requestValidator.changePassword)

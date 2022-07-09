@@ -83,7 +83,7 @@ class Service extends Controller {
       var user = await Schema.findOne({ email: req.user?.email })
 
       const updates = Object.keys(req.body)
-      const allowedUpdates = ['country', 'address', 'phone']
+      const allowedUpdates = ['country', 'address', 'phone', 'about']
 
       const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
       if (!isValidOperation) {
