@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  rhies-client-registry-server:
+  sams-api:
     image: sams-api:latest
     container_name: sams-api
     ports:
