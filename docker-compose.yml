@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+
+  rhies-client-registry-server:
+    image: sams-api:latest
+    container_name: sams-api
+    ports:
+      - "8091:3001"
+    restart: always
+    logging:
+      options:
+        max-size: 5m
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+        reservations:
+          memory: 1024M
+
